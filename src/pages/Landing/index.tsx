@@ -29,7 +29,7 @@ function Landing() {
             <img src={studyIcon} alt="Estudar" /> Estudar
           </a>
           <a href="#" className="give-classes">
-            <img src={givClassesIcon} alt="Dar aulas" /> Estudar
+            <img src={givClassesIcon} alt="Dar aulas" /> Dar aulas
           </a>
         </div>
 
