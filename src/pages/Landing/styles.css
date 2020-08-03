@@ -118,16 +118,25 @@
 
   .logo-container h2 {
     text-align: initial;
-    font-size: 3.6rem;
+    font-size: 3rem;
   }
 
   .logo-container img {
+    width: 360px;
     height: 100%;
   }
 
   .buttons-container {
     grid-area: buttons;
     justify-content: flex-start;
+  }
+
+  .buttons-container .study {
+    height: 90px;
+  }
+
+  .buttons-container .give-classes {
+    height: 90px;
   }
 
   .buttons-container a {
