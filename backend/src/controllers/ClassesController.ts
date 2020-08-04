@@ -12,7 +12,9 @@ class ClassesController {
   async store(req: Request, res: Response) {
     const { name, avatar, whatsapp, bio, subject, cost, schedule } = req.body;
 
-    const insertedUserUsersIds = await db('users').insert({
+    const trx = await db.transaction();
+
+    const insertedUserUsersIds = await trx('users').insert({
       name,
       avatar,
       whatsapp,
@@ -21,7 +23,7 @@ class ClassesController {
 
     const user_id = insertedUserUsersIds[0];
 
-    const insertedClassesIds = await db('classes').insert({
+    const insertedClassesIds = await trx('classes').insert({
       subject,
       cost,
       user_id,
@@ -38,7 +40,9 @@ class ClassesController {
       };
     });
 
-    await db('class_schedule').insert(classSchedule);
+    await trx('class_schedule').insert(classSchedule);
+
+    await trx.commit();
 
     return res.json({ ok: true });
   }
