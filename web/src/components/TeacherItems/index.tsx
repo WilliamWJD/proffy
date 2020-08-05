@@ -1,38 +1,56 @@
 import React from 'react';
 
+import api from '../../services/api';
+
 import WhatsAppIcon from '../../assets/icons/whatsapp.svg';
 
 import './styles.css';
 
-const TeacherItem: React.FC = () => {
+export interface Teacher {
+  avatar: string;
+  bio: string;
+  cost: number;
+  id: number;
+  name: string;
+  subject: string;
+  whatsapp: string;
+}
+
+interface TeacherItemProps {
+  teacher: Teacher;
+}
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+  async function createNewConnection() {
+    await api.post('/connections', { user_id: teacher.id });
+  }
+
   return (
     <article className="teacher-item">
       <header>
-        <img
-          src="https://avatars0.githubusercontent.com/u/31516475?s=460&u=e2be85f1b7be7a9cd728c0fe9fd0ad8552d9cd57&v=4"
-          alt="William Dias"
-        />
+        <img src={teacher.avatar} alt={teacher.name} />
         <div>
-          <strong>William Dias</strong>
-          <span>Java</span>
+          <strong>{teacher.name}</strong>
+          <span>{teacher.subject}</span>
         </div>
       </header>
 
-      <p>
-        Sou um amante e entusiasta da tecnologia, sempre buscando novos
-        conhecimentos e procurando melhorar a cada dia não só como profissional
-        mas também como pessoa.
-      </p>
+      <p>{teacher.bio}</p>
 
       <footer>
         <p>
           Preço/Hora
-          <strong>R$:150,00</strong>
+          <strong>R$: {teacher.cost}</strong>
         </p>
-        <button type="button">
+        <a
+          onClick={createNewConnection}
+          href={`https://wa.me/${teacher.whatsapp}`}
+          target="_blank"
+          type="button"
+        >
           <img src={WhatsAppIcon} alt="WhatsApp" />
           Entrar em contato
-        </button>
+        </a>
       </footer>
     </article>
   );

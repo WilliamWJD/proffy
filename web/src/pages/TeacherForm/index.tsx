@@ -119,6 +119,7 @@ function TeacherForm() {
                 { value: 'Física', label: 'Física' },
                 { value: 'Geografia', label: 'Geografia' },
                 { value: 'História', label: 'História' },
+                { value: 'Português', label: 'Português' },
               ]}
             />
             <Input
