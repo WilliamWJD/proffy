@@ -1,5 +1,6 @@
 import React, { useState, FormEvent } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
 
@@ -57,9 +58,9 @@ function TeacherForm() {
 
       history.push('/');
 
-      alert('Cadastrado com sucesso');
+      toast.success('Proffy cadastrado com sucesso!!')
     } catch (error) {
-      alert('Erro ao cadastrar');
+      toast.error('Erro ao cadastrar proffy')
       console.log(error);
     }
   }

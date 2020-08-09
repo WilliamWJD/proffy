@@ -6,6 +6,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import givClassesBgImage from '../../assets/images/give-classes-background.png';
 
 import styles from './styles';
+import DateTimePickerModal from '../../components/DateTimePickerModal/indes';
 
 function GiveClasses() {
   const { goBack } = useNavigation();
@@ -27,6 +28,8 @@ function GiveClasses() {
           plataforma web.
         </Text>
       </ImageBackground>
+
+      <DateTimePickerModal/>
 
       <RectButton style={styles.okButton} onPress={handleNavigateBack}>
         <Text style={styles.okButtonText}>Tudo bem</Text>
