@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, ImageBackground } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
 import givClassesBgImage from '../../assets/images/give-classes-background.png';
@@ -29,8 +29,8 @@ function GiveClasses() {
         </Text>
       </ImageBackground>
 
-      <DateTimePickerModal/>
-
+      {/* <DateTimePickerModal/> */}
+      
       <RectButton style={styles.okButton} onPress={handleNavigateBack}>
         <Text style={styles.okButtonText}>Tudo bem</Text>
       </RectButton>

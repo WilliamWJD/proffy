@@ -8,6 +8,7 @@ import api from '../../services/api';
 
 import PageHeader from '../../components/PageHeader';
 import TeacherItem, { Teacher } from '../../components/TeacherItem';
+import DaysModal from '../../components/DaysModal';
 
 import styles from './styles';
 
@@ -17,8 +18,10 @@ function TeacherList() {
   const [teachers, setTeachers] = useState([]);
 
   const [subject, setSubject] = useState('');
-  const [week_day, setWeekDay] = useState('');
+  const [week_day, setWeekDay] = useState({id:null, title:''});
   const [time, setTime] = useState('');
+
+  const [modalDaysVisible, setModalDaysVisible] = useState(false)
 
   async function loadFavorites() {
     const response = await AsyncStorage.getItem('favorites');
@@ -39,11 +42,17 @@ function TeacherList() {
   async function handleFiltersSubmit() {
     loadFavorites();
 
+    const day = week_day.id;
+
     const response = await api.get('/classes', {
-      params: { week_day, subject, time },
+      params: { week_day:day, subject, time },
     });
     setIsFiltersVisible(false);
     setTeachers(response.data);
+  }
+
+  function showModalDaysVisible(){
+    setModalDaysVisible(true)
   }
 
   return (
@@ -56,6 +65,7 @@ function TeacherList() {
           </BorderlessButton>
         }
       >
+      <DaysModal isVisible={modalDaysVisible} onCancel={setModalDaysVisible} isSelected={setWeekDay}/>  
         {isFiltersVisible && (
           <View style={styles.searchForm}>
             <Text style={styles.label}>Matéria</Text>
@@ -70,13 +80,9 @@ function TeacherList() {
             <View style={styles.inputGroup}>
               <View style={styles.inputBlock}>
                 <Text style={styles.label}>Dia da semana</Text>
-                <TextInput
-                  placeholderTextColor="#c1bccc"
-                  style={styles.input}
-                  placeholder="Qual o dia ?"
-                  value={week_day}
-                  onChangeText={(text) => setWeekDay(text)}
-                />
+                <RectButton style={styles.input} onPress={showModalDaysVisible}>
+                  <Text>{week_day.title}</Text>
+                </RectButton>
               </View>
 
               <View style={styles.inputBlock}>
