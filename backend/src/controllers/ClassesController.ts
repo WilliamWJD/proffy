@@ -41,28 +41,22 @@ class ClassesController {
   }
 
   async store(req: Request, res: Response) {
-    const { name, avatar, whatsapp, bio, subject, cost, schedule } = req.body;
-
+    const { avatar, whatsapp, bio, subject, cost, schedule } = req.body;
     const trx = await db.transaction();
-
     try {
       const insertedUserUsersIds = await trx('users').insert({
-        name,
         avatar,
         whatsapp,
         bio,
+        id_login: req.userId,
       });
-
       const user_id = insertedUserUsersIds[0];
-
       const insertedClassesIds = await trx('classes').insert({
         subject,
         cost,
         user_id,
       });
-
       const class_id = insertedClassesIds[0];
-
       const classSchedule = schedule.map((item: ScheduleItem) => {
         return {
           class_id,
@@ -71,15 +65,11 @@ class ClassesController {
           to: ConvertHourToMinutes(item.to),
         };
       });
-
       await trx('class_schedule').insert(classSchedule);
-
       await trx.commit();
-
       return res.status(201).json({});
     } catch (error) {
       await trx.rollback();
-
       return res
         .status(400)
         .json({ error: 'Unexpected error while creating new class' });
