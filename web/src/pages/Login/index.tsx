@@ -43,6 +43,7 @@ const Login: React.FC = () => {
                 value={email}
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
               <Input
                 name="password"
@@ -50,6 +51,7 @@ const Login: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
+                required
               />
               <button type="submit">Salvar cadastro</button>
             </form>
