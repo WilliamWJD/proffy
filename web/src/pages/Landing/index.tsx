@@ -17,8 +17,13 @@ function Landing() {
 
   useEffect(() => {
     async function loadTotalConnections() {
-      const response = await api.get('/connections');
+      const response = await api.get('/connections', {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('@auth:token')}`,
+        },
+      });
       setTotalConnections(response.data.total);
+      console.log(`Bearer ${localStorage.getItem('@auth:token')}`);
     }
     loadTotalConnections();
   }, []);
