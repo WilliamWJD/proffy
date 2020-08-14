@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+
+import AuthContext from '../../context/auth';
 
 import logo from '../../assets/logo.svg';
 import purple from '../../assets/icons/purple-heart.svg';
@@ -8,6 +10,18 @@ import Input from '../../components/Input';
 import './styles.css';
 
 const Login: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { signed, user, signIn } = useContext(AuthContext);
+
+  console.log({ signed, user });
+
+  function handleSignIn(e: any) {
+    e.preventDefault();
+    signIn(email, password);
+  }
+
   return (
     <div className="loginContainer">
       <div className="boxLogo">
@@ -22,9 +36,21 @@ const Login: React.FC = () => {
           <div className="formLogin">
             <h2>Fazer login</h2>
 
-            <form action="">
-              <Input name="email" label="E-mail" />
-              <Input name="password" label="Senha" />
+            <form onSubmit={handleSignIn}>
+              <Input
+                name="email"
+                label="E-mail"
+                value={email}
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Input
+                name="password"
+                label="Senha"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+              />
               <button type="submit">Salvar cadastro</button>
             </form>
           </div>
